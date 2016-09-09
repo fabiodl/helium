@@ -2,8 +2,8 @@ CROSSCOMPILE=1
 
 ifdef CROSSCOMPILE
 OS=Windows_NT
-CPPFLAGS+=-D_CROSS_COMPILING_WIN32 -static-libgcc
-LIBS += -static-libgcc                                  
+CPPFLAGS+=-D_CROSS_COMPILING_WIN32 -static-libgcc -static
+LIBS += -static-libgcc -static                                  
 endif
 
 CC=i686-w64-mingw32-g++
