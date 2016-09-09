@@ -1,7 +1,0 @@
-CPPFLAFS = -DWIN32
-SOURCES = usbionum.cpp $(HELIUM)/os/usbHid.cpp $(HELIUM)/hiddevice/hidUSBIO.cpp  $(HELIUM)/hiddevice/crcException.cpp $(HELIUM)/math/crc.cpp $(HELIUM)/os/time.cpp $(THREAD) $(HELIUM)/core/exception.cpp  $(HELIUM)/util/printHex.cpp $(HELIUM)/util/mout.cpp  $(HELIUM)/debug/trace.cpp
-
-NOCCACHE=1
-NO_DEFAULT_OBJECTS=1
-PROGS=util/usbionum
-include ../../Makehel

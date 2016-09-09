@@ -101,6 +101,15 @@ DEFAULT= $(CORE) $(NET) $(THREAD)
 endif
 
 
+ifdef CROSSCOMPILE_WIN32
+  OS=Windows_NT
+  CPPFLAGS+=-D_CROSS_COMPILING_WIN32 -static-libgcc -static
+  LIBS += -static-libgcc -static                                  
+  CC=i686-w64-mingw32-g++
+endif
+
+
+
 
 
 SOURCES += $(DEFAULT)
@@ -111,6 +120,7 @@ else
 endif
 
 #DEBUGLEVEL = -O2 -Wall
+
 
 CPPFLAGS += $(DEBUGLEVEL) -I $(PPATH) -I $(THIRD) -DdDOUBLE  
 LIBS += $(DEBUGLEVEL) -lpthread $(LINKOPTIONS)
@@ -272,11 +282,11 @@ ifeq ($(OS),Windows_NT)
 NOCCACHE = 1
 endif
 
-ifndef CC
+ifndef CROSSCOMPILE_WIN32
   ifndef NOCCACHE
-    CC=g++
+    CC = g++
   else
-    CC=ccache g++
+    CC = ccache g++
   endif
 endif
 

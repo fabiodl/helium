@@ -2,7 +2,7 @@
 #include <iostream>
 #include<new>
 
-#define TEST_USBIOMODULE
+//#define TEST_USBIOMODULE
 
 #ifndef TEST_USBIOMODULE
 #include <helium/hiddevice/hidUSBIO.h>

@@ -1,7 +1,8 @@
+# CROSSCOMPILE_WIN32= 1
 
-SOURCES = usbionum.cpp $(HELIUM)/os/usbHid.cpp $(HELIUM)/hiddevice/hidUSBIO.cpp  $(HELIUM)/hiddevice/crcException.cpp $(HELIUM)/math/crc.cpp
-
+SOURCES = usbionum.cpp $(HELIUM)/os/usbHid.cpp $(HELIUM)/hiddevice/hidUSBIO.cpp  $(HELIUM)/hiddevice/crcException.cpp $(HELIUM)/math/crc.cpp $(HELIUM)/os/time.cpp $(THREAD) $(HELIUM)/core/exception.cpp  $(HELIUM)/util/printHex.cpp $(HELIUM)/util/mout.cpp  $(HELIUM)/debug/trace.cpp
 
 PROGS=util/usbionum
-LIBS= -ludev
+NO_DEFAULT_OBJECTS=1
+USEUSB=1
 include ../../Makehel
