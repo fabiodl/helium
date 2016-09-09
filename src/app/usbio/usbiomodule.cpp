@@ -1,7 +1,12 @@
 #include "./usbiomodule.h"
 #include <iostream>
 #include<new>
+
+#define TEST_USBIOMODULE
+
+#ifndef TEST_USBIOMODULE
 #include <helium/hiddevice/hidUSBIO.h>
+#else
 
 namespace fake{
 namespace helium{
@@ -31,7 +36,8 @@ namespace helium{
 }
 }//ns fake
 
-//using namespace fake;
+using namespace fake;
+#endif
 
 void* new_usbio(){  
   try{
