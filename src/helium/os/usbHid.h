@@ -45,7 +45,7 @@ namespace helium{
 
 
       UsbPeripheralNotFound(int vendorId,int productId,const std::string& name="",const std::string& detail=""):
-	UsbException("peripheral:"+toHexString(vendorId,4)+":"+toHexString(productId,4)+addDetail(name," aka ","")+addDetail(detail))
+	UsbException("peripheral:"+toHexString(vendorId,4)+":"+toHexString(productId,4)+addDetail(name," aka ","")+" not found"+addDetail(detail))
       {
       }
 
