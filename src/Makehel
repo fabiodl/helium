@@ -295,7 +295,7 @@ ifndef EXTENSION
   ifeq ($(OS),Windows_NT)
     EXTENSION=.exe
   else
-    EXTENSION=.$$(shell uname -n)
+    EXTENSION=.$(shell uname -n)
   endif
 endif
 
