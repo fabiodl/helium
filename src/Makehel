@@ -272,11 +272,14 @@ ifeq ($(OS),Windows_NT)
 NOCCACHE = 1
 endif
 
-
-CC=ccache g++
-ifdef NOCCACHE
-CC=g++
+ifndef CC
+  ifndef NOCCACHE
+    CC=g++
+  else
+    CC=ccache g++
+  endif
 endif
+
 OBJDIR = ../../../obj/$(shell uname -n)
 ODIR = $(OBJDIR)/src/$(OWNPATH)
 
