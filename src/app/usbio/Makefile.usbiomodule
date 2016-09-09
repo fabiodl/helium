@@ -1,0 +1,11 @@
+
+SOURCES = usbiomodule.cpp $(HELIUM)/os/usbHid.cpp $(HELIUM)/hiddevice/hidUSBIO.cpp  $(HELIUM)/hiddevice/crcException.cpp $(HELIUM)/math/crc.cpp $(HELIUM)/os/time.cpp $(THREAD) $(HELIUM)/core/exception.cpp  $(HELIUM)/util/printHex.cpp $(HELIUM)/util/mout.cpp  $(HELIUM)/debug/trace.cpp
+
+NO_DEFAULT_OBJECTS=1
+USEUSB=1
+PROGS=util/usbiomodule
+EXTENSION=.so
+CPPFLAGS = -shared -Wl,-soname,usbioModule  -fPIC 
+LIBS= -shared -Wl,-soname,usbioModule  -fPIC 
+
+include ../../Makehel
