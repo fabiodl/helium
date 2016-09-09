@@ -1,0 +1,16 @@
+INCLUDE= ../..
+HELIUM= ../../helium
+
+CPPFLAGS = -I $(INCLUDE)
+
+OBJ= server.o $(HELIUM)/net/commandSplitter.o $(HELIUM)/net/netSocket.o $(HELIUM)/net/serverSocket.o $(HELIUM)/thread/thread.o $(HELIUM)/thread/mutex.o $(HELIUM)/thread/semaphore.o $(HELIUM)/util/debug.o $(HELIUM)/system/cellServer.o
+EXECUTABLE=serverSample
+
+LIBS= -lpthread
+
+
+tcpServer:$(OBJ)
+	g++ -o $(EXECUTABLE) $(OBJ) $(LIBS)
+
+clean:
+	rm -f $(EXECUTABLE) $(OBJ)

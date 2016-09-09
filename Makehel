@@ -1,0 +1,338 @@
+#Release_flags se
+#getting current path
+
+#the folder name of this Makefile
+FOL = src
+
+#function to reverse words
+reverse = $(if $(1),$(call reverse,$(wordlist 2,$(words $(1)),$(1)))) $(firstword $(1))
+
+OWNP = $(shell pwd)
+OWNPS = $(call reverse,$(subst /, ,$(OWNP))) #reversed spaced pwd
+
+#variable of empty space
+EMPTY = 
+SPACE = $(EMPTY) $(EMPTY)
+
+
+#mark "src" with :
+FORR = $(call reverse,$(foreach i,$(OWNPS),$(if $(findstring $(FOL),$(i)),$(i):,$(i))))
+
+#replacing space with /
+FORS = $(subst $(SPACE),/,$(FORR))
+#replacing : with space to separate the directory
+FORE = $(subst :, ,$(FORS))
+
+#the last word is the own path
+LASTWORD = $(word $(words $(FORE)),$(FORE))
+FIRSTWORD = $(firstword $(FORE))
+ifeq ($(LASTWORD),$(FIRSTWORD))
+OWNPATH :=
+else
+OWNPATH = $(patsubst /%,%,$(LASTWORD))
+endif
+
+#get ppath from own path
+#for each word, print ..
+PP = $(foreach i,$(subst /, ,$(OWNPATH)),..)
+#replace space with /
+PPATH = $(subst $(SPACE),/,$(PP))
+
+#path definition
+THIRD= ../$(PPATH)/third
+HELIUM= $(PPATH)/helium
+
+PROGP = $(PPATH)/../bin/$(PROGS)
+
+
+#helium source files list
+
+THREAD = $(HELIUM)/thread/thread.cpp $(HELIUM)/thread/mutex.cpp $(HELIUM)/thread/sharedAccess.cpp $(HELIUM)/thread/semaphore.cpp $(HELIUM)/thread/timer.cpp
+NET= $(HELIUM)/net/netSocket.cpp $(HELIUM)/net/serverSocket.cpp $(HELIUM)/net/clientSocket.cpp $(HELIUM)/net/commandSplitter.cpp
+SYSTEM = $(HELIUM)/system/idTree.cpp $(HELIUM)/system/cellServer.cpp $(HELIUM)/system/socketMessageSpooler.cpp $(HELIUM)/system/keyboardCellServer.cpp  $(HELIUM)/system/remoteCell.cpp $(HELIUM)/system/remoteCellImporter.cpp $(HELIUM)/system/cellClient.cpp $(HELIUM)/system/helpCell.cpp $(HELIUM)/system/valueProxy.cpp
+UTIL = $(HELIUM)/debug/trace.cpp $(HELIUM)/util/mout.cpp $(HELIUM)/util/printHex.cpp
+
+OPENCV = $(HELIUM)/cv/cvCamera.cpp  $(HELIUM)/cv/cvWindow.cpp $(HELIUM)/cv/stereoBlob.cpp
+
+OPENCV2= $(HELIUM)/cv2/window.cpp $(HELIUM)/cv/cvCamera.cpp 
+
+SERIAL= $(HELIUM)/os/serial.cpp 
+
+VSERIAL = $(SERIAL) $(HELIUM)/vstone/vsByte.cpp   $(HELIUM)/vstone/serialProbe.cpp $(HELIUM)/math/crc.cpp $(HELIUM)/vstone/vsCrcException.cpp $(HELIUM)/vstone/vServoTable.cpp $(HELIUM)/vstone/vsCrcTouchSensor.cpp $(HELIUM)/vstone/vstoneSerial.cpp
+
+VSERVO= $(HELIUM)/vstone/vsCrcServo.cpp
+DYNAMIXEL= $(HELIUM)/dynamixel/dynamixelException.cpp $(HELIUM)/dynamixel/dynamixelTable.cpp $(HELIUM)/dynamixel/dynamixelSign.cpp
+
+LAPACK = $(HELIUM)/math/lapackUtil.cpp 
+MATH = $(HELIUM)/math/filter.cpp $(HELIUM)/math/algebra.cpp 
+CONVEX = $(HELIUM)/convex/convexModel.cpp $(HELIUM)/convex/convexModelXml.cpp $(HELIUM)/convex/boxNode.cpp $(HELIUM)/convex/jointParser.cpp $(HELIUM)/convex/drawConvex.cpp $(HELIUM)/convex/checkManager.cpp
+GRAPHICS = $(HELIUM)/graphics/glDraw.cpp $(HELIUM)/graphics/glUtil.cpp $(HELIUM)/graphics/glTexture.cpp $(HELIUM)/graphics/pixelReader.cpp $(HELIUM)/graphics/ppm.cpp $(MATH)
+HW = $(HELIUM)/robot/hwStateMonitor.cpp $(HELIUM)/robot/hwInterface.cpp 
+ROBOTFRAME = $(HELIUM)/robot/frame.cpp $(HELIUM)/robot/policy.cpp $(HELIUM)/robot/framePolicy.cpp $(HELIUM)/robot/motionParser.cpp
+MOTOR = $(HELIUM)/robot/motorInterface.cpp $(HELIUM)/robot/motorOffMode.cpp $(HELIUM)/robot/motorActiveMode.cpp $(HELIUM)/robot/motorFramePlayMode.cpp $(HELIUM)/robot/motorLinearMode.cpp $(HELIUM)/robot/motorSpooler.cpp 
+SENSOR = $(HELIUM)/robot/sensorInterface.cpp
+GYRO = $(HELIUM)/robot/gyroStructures.cpp
+ROBOT = $(HELIUM)/robot/genericMotorSign.cpp  $(HW) $(MOTOR) $(SENSOR) $(GYRO) $(HELIUM)/robot/knownPosNormalizer.cpp $(HELIUM)/vstone/vServoSign.cpp $(HELIUM)/dynamixel/dynamixelSign.cpp
+CORE = $(THREAD) $(UTIL)  $(HELIUM)/core/exception.cpp $(HELIUM)/os/time.cpp
+CELL = $(HELIUM)/system/cellClient.cpp $(HELIUM)/system/remoteCell.cpp 
+APPLICATION = $(HELIUM)/xml/xmlLoader.cpp $(HELIUM)/robot/application.cpp $(HELIUM)/robot/config.cpp $(HELIUM)/system/valueProxy.cpp  $(HELIUM)/robot/robotProtocol.cpp 
+HELIUMS = $(HELIUM)/net/clientSocket.cpp $(HELIUM)/net/netSocket.cpp $(APPLICATION)  $(HELIUM)/core/basicEnum.cpp   $(HELIUM)/net/commandSplitter.cpp 
+MOCAP = $(HELIUM)/wrap/evart/evartLinux.cpp $(HELIUM)/mocap/mocap.cpp
+ONEXIT = $(HELIUM)/thread/exitHandler.cpp 
+SIMUL = $(HELIUM)/simul/structure.cpp $(HELIUM)/simul/structureDescription.cpp  $(HELIUM)/simul/simulMotorAdapter.cpp $(HELIUM)/core/basicEnum.cpp
+SIMULGRAPHICS = $(HELIUM)/simul/mouseSimulatedTouchSensor.cpp 
+ODE = $(HELIUM)/wrap/ode/odeStructure.cpp  $(HELIUM)/wrap/ode/simulGraphics.cpp $(HELIUM)/wrap/ode/glDrawOde.cpp  $(HELIUM)/wrap/ode/odeMath.cpp $(HELIUM)/wrap/ode/ramp.cpp $(HELIUM)/simul/simulTouchAdapter.cpp $(HELIUM)/simul/simulRototraAdapter.cpp
+PEDAL = $(HELIUM)/device/pedal.cpp $(HELIUM)/device/deviceException.cpp
+JOG =$(HELIUM)/device/sonyJog.cpp
+ITARO=$(HELIUM)/itaro/rototraToMotors.cpp $(HELIUM)/itaro/movements.cpp
+
+
+V4GSIMUL = $(HELIUM)/vstone/V4Gstructure.cpp $(HELIUM)/vstone/neonySensorMapping.cpp $(HW)
+
+#third source files list
+TINYXML= $(THIRD)/tinyxml/tinyxml.cpp $(THIRD)/tinyxml/tinyxmlerror.cpp $(THIRD)/tinyxml/tinyxmlparser.cpp  $(THIRD)/tinyxml/tinystr.cpp
+
+ifndef NO_DEFAULT_OBJECTS
+DEFAULT= $(CORE) $(NET) $(SYSTEM) $(THREAD) $(UTIL)
+endif
+
+ifdef ONLYNET
+DEFAULT= $(CORE) $(NET) $(THREAD)
+endif
+
+
+
+
+
+SOURCES += $(DEFAULT)
+DEBUGLEVEL = -g -Wall -rdynamic  
+#DEBUGLEVEL = -O2 -Wall
+
+CPPFLAGS += $(DEBUGLEVEL) -I $(PPATH) -I $(THIRD) -rdynamic -DdDOUBLE  
+LIBS += $(DEBUGLEVEL) -lpthread $(LINKOPTIONS)
+
+
+
+#check flags
+
+ifdef USEXML
+SOURCES +=  $(HELIUM)/xml/xmlLoader.cpp $(TINYXML) 
+endif
+
+
+ifdef USEGTK
+USEGTKMM = 1
+SOURCES += $(HELIUM)/gtk/gtkExceptionHandling.cpp $(HELIUM)/gtk/gtkSignal.cpp
+endif
+
+ifdef USEGTKMM
+CPPFLAGS += `pkg-config gtkmm-2.4 --cflags`
+LIBS += `pkg-config gtkmm-2.4 --libs` -lgthread-2.0 
+endif
+
+ifdef USEGTKGL
+
+ifndef NOGTKGL 
+CPPFLAGS += `pkg-config gtkgl-2.0 --cflags`
+LIBS += `pkg-config gtkgl-2.0 --libs`
+endif
+
+USEGL += 1
+endif 
+
+ifdef USEODE
+SOURCES += $(ODE) $(SIMUL) $(SIMULGRAPHICS) $(MATH)
+LIBS += -lode
+USEGL = 1
+endif
+
+ifdef USEGTK3
+CPPFLAGS+=`pkg-config --cflags gtk+-3.0`
+LIBS+=`pkg-config --libs gtk+-3.0`
+endif
+
+ifdef USEGLX
+CPPFLAGS+=`pkg-config --cflags gdk-x11-3.0`
+LIBS+=`pkg-config --libs gdk-x11-3.0` -lX11 -lm 
+USEGL=1
+endif
+
+
+ifdef USEGL
+SOURCES += $(GRAPHICS)
+USEGLLIBS = 1
+endif
+
+ifdef USEGEIS
+LIBS+=-lgeis
+endif
+
+
+ifdef USEGLLIBS
+
+# Mac OS alternate cmdline link options
+UNAME = $(shell echo `uname`)
+ifeq ("$(UNAME)","Darwin")
+CPPFLAG += -DBABI
+LIBS += -framework Carbon -framework OpenGL -framework GLUT
+else
+LIBS += -lglut -lGL -lGLU
+endif
+
+endif
+
+ifdef USESCREENSHOT
+CPPFLAGS += -DSCREENSHOT
+endif
+
+
+ifdef USELAPACK
+LIBS += -llapack
+ifeq ("$(UNAME)","Darwin")
+LIBS += -framework Accelerate
+endif
+endif
+
+ifdef USEMOCAP
+SOURCES += $(MOCAP)
+endif
+
+
+ifdef USEOPENCV
+SOURCES += $(OPENCV)
+LIBS += -lopencv_core -lopencv_highgui
+CPPFLAGS+= -I /usr/include/opencv-2.3.1/
+endif
+
+ifdef USEOPENCVFB
+LIBS += `pkg-config --libs opencv `
+CPPFLAGS += `pkg-config -–cflags opencv` -I /usr/local/include/opencv
+endif
+
+
+ifdef USEOPENCV2
+#SOURCES += $(OPENCV2) $(OPENCV)
+LIBS += `pkg-config --cflags --libs opencv`    
+CPPFLAGS += `pkg-config --cflags opencv`  
+endif
+
+
+
+
+ifdef USEUSBRC003
+USEUSB = 1
+SOURCES+= $(HELIUM)/vstone/usbVsRc003.cpp
+endif
+
+ifdef USESERIAL
+SOURCES+=$(SERIAL)
+endif
+
+ifdef USESERIALRC003
+USEUSB = 1
+SOURCES+= $(HELIUM)/vstone/serialVsRc003.cpp
+endif
+
+ifdef USEUSB
+SOURCES += $(HELIUM)/os/usbHid.cpp
+ifdef USELIBUSB
+CPPFLAGS += -DUSE_LIBUSB
+LIBS += -lusb
+else
+platform=$(shell uname)
+ifeq ($(platform),Darwin)
+LIBS += -framework IOKit -framework CoreFoundation
+else
+LIBS += -ludev		
+endif
+endif
+endif
+
+ifdef USEVUSBHOST
+SOURCES += $(HELIUM)/wrap/vusb/vusb.cpp $(THIRD)/vusb/libhost/hiddata.cpp
+LIBS += `libusb-config --libs`
+CPPFLAGS += `libusb-config --cflags`
+endif
+
+
+UNAME = $(shell echo `uname`)
+ifeq ("$(UNAME)","Darwin")
+NOCCACHE = 1
+endif
+
+CC=ccache g++
+ifdef NOCCACHE
+CC=g++
+endif
+OBJDIR = ../../../obj/$(shell uname -n)
+ODIR = $(OBJDIR)/src/$(OWNPATH)
+
+DIRS = $(dir $(SOURCES))     #DIRS are directories of multiples sources
+SRC = $(notdir $(SOURCES))   #SRC are *.cpp from multiple sources
+
+#get 'link' to .ccp from different directories
+vpath %.cpp $(DIRS)
+
+
+#create .o in ODIR by replacing .cpp in SRC to .d
+OBJS := $(patsubst %.cpp, $(ODIR)/%.o, $(SOURCES))
+
+CPPFLAGS += $(CPPFLAG) #add extra define #make CPPFLAG=-DMYFLAG
+
+
+all: $(PROGP)
+
+#compile program
+$(PROGP): $(OBJS) 
+	@mkdir -p $(@D)
+	$(CC) -o $@.$(shell uname -n)  $^ $(LIBS) 
+-include $(OBJS:%.o=%.d)
+
+#build object files from the cpp collected with vpath
+$(ODIR)/%.o: %.cpp
+	@mkdir -p $(@D)
+	$(CC) $(CPPFLAGS) -g -c -o $@ $<
+	$(CC) -MM $(CPPFLAGS) $*.cpp -MF $(@:.o=.d) -MT $@
+
+$(ODIR)/%.o: %.c 
+	@mkdir -p $(@D)
+	$(CC) $(CPPFLAGS) -c -o $@ $<
+	$(CC) -MM $(CPPFLAGS) $*.c -MF $(@:.o=.d) -MT $@
+
+#create dependency files from cpp in ODIR
+#$(ODIR)/%.d: %.cpp
+#	@mkdir -p $(@D)
+#	$(CC) -MM $(CPPFLAGS) -MF $@ -MP -MT $(@:.d=.o) $< -MT $@
+
+#$(CC) -MM $(CPPFLAGS) -MF $@ -MP -MT $(@:.d=.o) $< -MT $@
+
+#MM means to create dependency excluding library includes "/usr" etc
+#MF is to save file to $@ aka $(ODIR)/%.d (each d files in obj/)
+#MP is to have phony
+#MT is to add left side of :, since .o is the same as .d, just need a replacement of $@
+#MT is to add $@ (.d) to left side
+
+DEPS = $(OBJS:%.o=%.d)
+#DEPS creates dependency with same name as objects
+
+.PHONY : all clean cleandep createdep
+
+clean: cleandep 
+
+cleandep:
+	rm -f  $(PROGP).$(shell uname -n) $(OBJS) $(DEPS)
+
+#DEPS explanation:
+#a is remade when a.h is changed
+#DEPS file example
+#obj/b.o obj/b.d: b.cpp b.h c.h
+#directory:
+#a.cpp Makefile obj/a.o obj/a.d
+#is based on the Makefile folder ie. the source files, so only the object folder needs to be changed
+
+#create a file listing all .h .hpp .cpp needed to make the executable
+#print .d files, replace space with lines, cat the content of the filenames, remove backslash, replace space with newlines, remove lines containing colon, get the realpath of the files, get unique lines, get only lines starting with /home/, and save the file to /tmp/list.txt
+FORCE:
+list: FORCE
+	$(shell echo "$(OBJS:%.o=%.d)" | tr " " "\n" | xargs cat | tr '\\' " " | tr " " "\n" | grep -v ":" | xargs -L1 realpath | sort | uniq | grep "^/home/" > /tmp/list.txt)
+

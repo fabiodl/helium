@@ -1,0 +1,11 @@
+s ~ Welcome client 0;
+
+r value + 
+s c ok;
+
+s % 23;
+
+s % 40;
+
+s % 30;
+

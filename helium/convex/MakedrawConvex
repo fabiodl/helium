@@ -1,0 +1,24 @@
+THIRD= ../../third
+PPATH = ..
+
+MATH=$(PPATH)/math/matrixUtil.cpp
+GRAPHICS= $(PPATH)/graphics/glUtil.cpp $(PPATH)/graphics/glDraw.cpp $(PPATH)/graphics/glTexture.cpp
+ROBOT= $(PPATH)/robot/asciiServer.cpp $(PPATH)/robot/motors.cpp $(PPATH)/robot/commandParser.cpp  $(PPATH)/robot/flowManager.cpp $(PPATH)/robot/namedException.cpp $(PPATH)/robot/calib.cpp 
+SERIAL= $(PPATH)/serial/CSerial.cpp
+TINYXML= $(THIRD)/tinyxml/tinyxml.cpp $(THIRD)/tinyxml/tinyxmlparser.cpp $(THIRD)/tinyxml/tinyxmlerror.cpp $(THIRD)/tinyxml/tinystr.cpp
+
+PARSER= $(PPATH)/parsers/motorsParser.cpp
+COLDET= $(PPATH)/coldet/boxCollDet.cpp $(PPATH)/coldet/drawBoxCollDet.cpp 
+VSTONE= $(PPATH)/vstone/V4GcollDet.cpp $(PPATH)/vstone/serialMotors.cpp
+NET= $(PPATH)/net/serverSocket.cpp
+THREAD= $(PPATH)/thread/lwThread.cpp
+
+
+SOURCES = drawConvex.cpp fransiskaTest2.cpp convexModel.cpp convexModelXml.cpp boxNode.cpp jointParser.cpp $(MATH) $(GRAPHICS) $(TINYXML) $(ROBOT) $(COLDET) $(VSTONE) $(PARSER) $(NET) $(THREAD) $(VSTONE) $(SERIAL)
+
+
+PROGS=drawConvex
+
+CPPFLAGS = -g -Wall -I $(PPATH) -I $(THIRD)
+LIBS= -lglut -lpthread
+include ../Makearch

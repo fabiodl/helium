@@ -1,0 +1,6 @@
+SOURCES = readSensors.cpp $(TINYXML) $(APPLICATION) $(CORE) $(ROBOT)
+
+
+PROGS=samples/readSensor
+
+include ../../Makehel

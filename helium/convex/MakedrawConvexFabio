@@ -1,0 +1,15 @@
+THIRD= ../../third
+PPATH = ..
+
+MATH=$(PPATH)/math/matrixUtil.cpp
+GRAPHICS= $(PPATH)/graphics/glUtil.cpp $(PPATH)/graphics/glDraw.cpp $(PPATH)/graphics/glTexture.cpp
+
+TINYXML= $(THIRD)/tinyxml/tinyxml.cpp $(THIRD)/tinyxml/tinyxmlparser.cpp $(THIRD)/tinyxml/tinyxmlerror.cpp $(THIRD)/tinyxml/tinystr.cpp
+
+SOURCES = drawConvex.cpp fabioTest.cpp convexModel.cpp  boxnode.cpp jointparser.cpp $(MATH) $(GRAPHICS) $(TINYXML)
+
+PROGS=drawConvexFabio
+
+CPPFLAGS = -g -Wall -I $(PPATH) -I $(THIRD)
+LIBS= -lglut
+include ../Makearch

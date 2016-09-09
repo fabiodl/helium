@@ -1,0 +1,6 @@
+SOURCES = mocapSample.cpp
+USEMOCAP = 1
+
+PROGS=samples/mocapSample
+
+include ../../Makehel
