@@ -1,0 +1,7 @@
+
+SOURCES =m3cmd.cpp m3reader.cpp $(HELIUM)/os/usbHid.cpp  $(HELIUM)/math/crc.cpp $(HELIUM)/hiddevice/crcException.cpp
+
+
+PROGS=util/m3cmd
+USEUSB = 1
+include ../../Makehel

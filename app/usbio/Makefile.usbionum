@@ -1,0 +1,7 @@
+
+SOURCES = usbionum.cpp $(HELIUM)/os/usbHid.cpp $(HELIUM)/hiddevice/hidUSBIO.cpp  $(HELIUM)/hiddevice/crcException.cpp $(HELIUM)/math/crc.cpp
+
+
+PROGS=util/usbionum
+LIBS= -ludev
+include ../../Makehel

@@ -1,0 +1,7 @@
+SOURCES=  $(APPLICATION) $(TINYXML) $(ROBOTFRAME)  pmove.cpp psimul.cpp $(V4GSIMUL) $(ROBOT)
+ 
+USEODE= 1
+
+PROGS=papp/pmove 
+
+include ../../Makehel

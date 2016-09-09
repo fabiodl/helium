@@ -1,0 +1,7 @@
+
+SOURCES = directWriter.cpp m3reader.cpp $(HELIUM)/os/usbHid.cpp  $(HELIUM)/math/crc.cpp $(HELIUM)/hiddevice/crcException.cpp
+
+
+PROGS=util/directWriter
+LIBS= -ludev
+include ../../Makehel

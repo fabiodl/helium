@@ -1,0 +1,7 @@
+
+SOURCES = testFlash.cpp $(HELIUM)/os/usbHid.cpp  $(HELIUM)/math/crc.cpp $(HELIUM)/hiddevice/crcException.cpp $(HELIUM)/hiddevice/hidUSBIO.cpp
+
+
+PROGS=tests/testFlash
+LIBS= -ludev
+include ../../Makehel

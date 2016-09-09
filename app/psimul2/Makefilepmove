@@ -1,0 +1,6 @@
+
+SOURCES= $(HELIUM)/vstone/robovieMakerFile.cpp
+
+PROGS=papp/rmfile
+
+include ../../Makehel

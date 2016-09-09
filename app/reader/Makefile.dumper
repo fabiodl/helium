@@ -1,0 +1,7 @@
+
+SOURCES = dumper.cpp m3reader.cpp $(HELIUM)/os/usbHid.cpp  $(HELIUM)/math/crc.cpp $(HELIUM)/hiddevice/crcException.cpp
+
+
+PROGS=util/m3dumper
+LIBS= -ludev
+include ../../Makehel

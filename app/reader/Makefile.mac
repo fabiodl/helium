@@ -1,0 +1,9 @@
+
+SOURCES = usbReader.cpp $(HELIUM)/os/usbHid.cpp  $(HELIUM)/math/crc.cpp $(HELIUM)/hiddevice/crcException.cpp
+NOCCACHE=1
+
+PROGS=util/reader
+USEUSB=1
+LIBS = -L /opt/local/lib
+CPPFLAGS = -I /opt/local/include
+include ../../Makehel
