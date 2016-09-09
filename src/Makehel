@@ -103,12 +103,16 @@ endif
 
 
 
-
 SOURCES += $(DEFAULT)
-DEBUGLEVEL = -g -Wall -rdynamic  
+ifneq ($(OS),Windows_NT)
+ DEBUGLEVEL = -g -Wall -rdynamic
+else
+  DEBUGLEVEL = -g -Wall 
+endif
+
 #DEBUGLEVEL = -O2 -Wall
 
-CPPFLAGS += $(DEBUGLEVEL) -I $(PPATH) -I $(THIRD) -rdynamic -DdDOUBLE  
+CPPFLAGS += $(DEBUGLEVEL) -I $(PPATH) -I $(THIRD) -DdDOUBLE  
 LIBS += $(DEBUGLEVEL) -lpthread $(LINKOPTIONS)
 
 
@@ -233,19 +237,23 @@ USEUSB = 1
 SOURCES+= $(HELIUM)/vstone/serialVsRc003.cpp
 endif
 
-ifdef USEUSB
-SOURCES += $(HELIUM)/os/usbHid.cpp
-ifdef USELIBUSB
-CPPFLAGS += -DUSE_LIBUSB
-LIBS += -lusb
+ifeq ($(OS),Windows_NT)
+  LIBS += -lhid -lsetupapi
 else
-platform=$(shell uname)
-ifeq ($(platform),Darwin)
-LIBS += -framework IOKit -framework CoreFoundation
-else
-LIBS += -ludev		
-endif
-endif
+  ifdef USEUSB
+    SOURCES += $(HELIUM)/os/usbHid.cpp
+    ifdef USELIBUSB
+      CPPFLAGS += -DUSE_LIBUSB
+      LIBS += -lusb
+    else
+      platform=$(shell uname)
+      ifeq ($(platform),Darwin)
+        LIBS += -framework IOKit -framework CoreFoundation
+      else
+        LIBS += -ludev		
+      endif
+    endif
+  endif
 endif
 
 ifdef USEVUSBHOST
@@ -259,6 +267,11 @@ UNAME = $(shell echo `uname`)
 ifeq ("$(UNAME)","Darwin")
 NOCCACHE = 1
 endif
+
+ifeq ($(OS),Windows_NT)
+NOCCACHE = 1
+endif
+
 
 CC=ccache g++
 ifdef NOCCACHE
@@ -278,14 +291,20 @@ vpath %.cpp $(DIRS)
 OBJS := $(patsubst %.cpp, $(ODIR)/%.o, $(SOURCES))
 
 CPPFLAGS += $(CPPFLAG) #add extra define #make CPPFLAG=-DMYFLAG
-
+ifndef EXTENSION
+  ifeq ($(OS),Windows_NT)
+    EXTENSION=.exe
+  else
+    EXTENSION=.$$(shell uname -n)
+  endif
+endif
 
 all: $(PROGP)
 
 #compile program
 $(PROGP): $(OBJS) 
 	@mkdir -p $(@D)
-	$(CC) -o $@.$(shell uname -n)  $^ $(LIBS) 
+	$(CC) -o $@$(EXTENSION)  $^ $(LIBS) 
 -include $(OBJS:%.o=%.d)
 
 #build object files from the cpp collected with vpath

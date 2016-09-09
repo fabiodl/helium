@@ -1579,7 +1579,7 @@ UsbHid::UsbHid(int vendorId,int productId,const char *manufacturer,const char* p
   
   ULONG requiredLength=0;
   
-  LPTSTR lpDevicePath = NULL;
+  //  LPTSTR lpDevicePath = NULL;
   
   DWORD index = 0;
   
