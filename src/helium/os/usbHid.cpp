@@ -10,9 +10,14 @@
 
 
 #ifdef _WIN32
-#include <Windows.h>
+#include <windows.h>
 extern "C"{
+#ifdef _CROSS_COMPILING_WIN32
+  //we are cross compiling
+#include <hidsdi.h>
+#else
 #include <ddk\hidsdi.h>
+#endif
 }
 #include <setupapi.h>
 #include <helium/os/winError.h>

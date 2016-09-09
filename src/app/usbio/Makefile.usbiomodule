@@ -1,11 +1,24 @@
+CROSSCOMPILE=1
 
+ifdef CROSSCOMPILE
+OS=Windows_NT
+CPPFLAGS+=-D_CROSS_COMPILING_WIN32 -static-libgcc
+LIBS += -static-libgcc                                  
+endif
+
+CC=i686-w64-mingw32-g++
 SOURCES = usbiomodule.cpp $(HELIUM)/os/usbHid.cpp $(HELIUM)/hiddevice/hidUSBIO.cpp  $(HELIUM)/hiddevice/crcException.cpp $(HELIUM)/math/crc.cpp $(HELIUM)/os/time.cpp $(THREAD) $(HELIUM)/core/exception.cpp  $(HELIUM)/util/printHex.cpp $(HELIUM)/util/mout.cpp  $(HELIUM)/debug/trace.cpp
 
 NO_DEFAULT_OBJECTS=1
 USEUSB=1
 PROGS=util/usbiomodule
+ifeq ($(OS),Windows_NT)
+EXTENSION=.dll
+else
 EXTENSION=.so
-CPPFLAGS = -shared -Wl,-soname,usbioModule  -fPIC 
-LIBS= -shared -Wl,-soname,usbioModule  -fPIC 
+endif
+
+CPPFLAGS += -shared -Wl,-soname,usbioModule  -fPIC 
+LIBS += -shared -Wl,-soname,usbioModule  -fPIC 
 
 include ../../Makehel
