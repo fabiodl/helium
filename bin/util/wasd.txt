@@ -1,0 +1,12 @@
+up w
+down s
+left d
+right a
+a z
+b x
+c c
+start enter
+x v
+y b
+z n
+mode m

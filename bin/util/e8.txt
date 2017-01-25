@@ -1,0 +1,12 @@
+up #e8
+down #e9
+right #ea
+left #eb
+a #ec
+b #ed
+c #ef
+start #f0
+x #f1
+y #f2
+z #f3
+mode #f4
