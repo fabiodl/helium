@@ -3,11 +3,11 @@
 
 #include <helium/os/usbHid.h>
 #include <stdint.h>
-class MegaNkro:public helium::UsbHid{
+class Dusb:public helium::UsbHid{
 public:
   static const size_t NUMKEYS=24;
 
-  MegaNkro();
+  Dusb();
   
   void set(uint8_t* keys);
   
