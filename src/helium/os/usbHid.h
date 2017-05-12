@@ -144,6 +144,10 @@ public:
   };
   
 
+
+  template<int N,bool padRead,bool padWrite>
+  std::ostream& operator<<(std::ostream&,const   UsbMessage<N,padRead,padWrite>&);
+  
   //the following Hid class includes a timeout
 
 class UsbHid{

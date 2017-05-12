@@ -9,6 +9,7 @@
 #ifndef HE_USBHID_IMPL
 #define  HE_USBHID_IMPL
 #include <helium/core/void.h>
+#include <helium/util/printHex.h>
 namespace helium{
 
 
@@ -74,6 +75,14 @@ namespace helium{
     memcpy(this->data+1,d,payloadSize());
     return *this;
   }
+
+  template<int N,bool padRead,bool padWrite>
+  std::ostream& operator<<(std::ostream& o,const  UsbMessage<N,padRead,padWrite>& m){
+    o<<(padWrite?"(with report id) ":"");
+    printHex(m.data+(padWrite?0:1),padWrite?m.completeSize():m.payloadSize(),o); 
+    return o;
+  }
+
   
 
 
