@@ -28,6 +28,18 @@ private:
   RawCommand cmd;
 };
 
+class LocalCommand:public CommandParser{
+public:
+  enum Id{
+    ID=0xFF
+  };
+  LocalCommand(uint8_t localcmd);
+  RawCommand parse(int argc,char** argv);
+
+private:
+  uint8_t localcmd;
+};
+
 
 
 class DictionaryCommand:public CommandParser{

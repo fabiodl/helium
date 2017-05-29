@@ -8,6 +8,8 @@
 #include <string.h>
 
 
+
+
 template<typename T> RawCommand makeCommand(Command cmdId,T& data){
   RawCommand cmd(cmdId);
   cmd.packet.resize(1+sizeof(T));
@@ -23,6 +25,22 @@ RawCommand  NoParamCommand::parse(int argc,char** argv){
   if (argc!=0){
     throw std::invalid_argument("no parameters expected");
   }
+  return cmd;
+}
+
+
+LocalCommand::LocalCommand(uint8_t _localcmd):localcmd(_localcmd){  
+}
+
+
+
+RawCommand LocalCommand::parse(int argc,char** argv){
+  if (argc!=0){
+    throw std::invalid_argument("no parameters expected");
+  }
+  RawCommand cmd;
+  cmd.packet.push_back(ID);
+  cmd.packet.push_back(localcmd);
   return cmd;
 }
 

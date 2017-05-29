@@ -3,6 +3,14 @@
 #include <fstream>
 #include <stdlib.h>
 #include "commandParser.h"
+#include "keyMapping.h"
+
+
+
+enum LocalCmd{
+  LCMD_LISTKEYS,LCMD_LISTPADKEYS,LCMD_LISTIOKEYS
+};
+
 
 
 void usbSend(const RawCommand& cmd){  
@@ -11,8 +19,8 @@ void usbSend(const RawCommand& cmd){
     msg[i]=cmd.packet[i];
   }
   std::cout<<"prepared message "<<msg<<std::endl;
-  //helium::UsbHid hid(0x16c0,0x05dc,"fabiodl@gmail.com","dusb");
-  //hid.sendAll(msg);    
+  helium::UsbHid hid(0x16c0,0x05dc,"fabiodl@gmail.com","dusb");
+  hid.sendAll(msg);    
 }
 
 
@@ -38,6 +46,9 @@ int main(int argc,char** argv){
   
   DictionaryCommand cmd;
 
+  LocalCommand listKeys(LCMD_LISTKEYS),listPadkeys(LCMD_LISTPADKEYS),listIokeys(LCMD_LISTIOKEYS);
+
+  DictionaryCommand list;
   
   applycfg.commands["io"]=&applycfgIo;
 
@@ -59,8 +70,29 @@ int main(int argc,char** argv){
   cmd.commands["setcfg"]=&setcfg;
   cmd.commands["setio"]=&setio;
 
+  list.commands["keys"]=&listKeys;
+  list.commands["pad"]=&listPadkeys;
+  list.commands["io"]=&listIokeys;
+
+  cmd.commands["list"]=&list;
   try{
-    usbSend(cmd.parse(argc-1,argv+1));
+    const RawCommand rcmd(cmd.parse(argc-1,argv+1));
+    if (rcmd.packet[0]==LocalCommand::ID){
+      switch(rcmd.packet[1]){
+      case LCMD_LISTKEYS:
+        ::listKeys();
+        break;
+      case LCMD_LISTPADKEYS:
+        ::listPadKeys();
+        break;
+      case LCMD_LISTIOKEYS:
+        ::listExtraKeys();
+        break;
+
+      }
+    }else{
+      usbSend(rcmd);
+    }
   }catch(std::invalid_argument& e){
     std::cout<<e.what()<<std::endl;
   }

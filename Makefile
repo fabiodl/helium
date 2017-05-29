@@ -7,5 +7,7 @@ PROGS=util/dusbctl
 USEUSB = 1
 include ../../Makehel
 
+program: $(PROGP)
+
 memoryLayout: clientMemoryCheck.o
 	objdump -d -j .data clientMemoryCheck.o

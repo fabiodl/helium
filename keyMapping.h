@@ -14,4 +14,8 @@ int getIndex(const std::string& s,const char** dict,size_t dictLength,const std:
 
 extern const char* extraKeys[];
 
+void listKeys();
+void listPadKeys();
+void listExtraKeys();
+
 #endif

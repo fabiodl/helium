@@ -196,3 +196,26 @@ void sanityCheck(){
 
 }
 
+void listKeys(){
+  for (int i=0;i<KEYBOARDKEYS;i++){
+    std::cout<<keyboardKeys[i]<<" ";
+    if (i%4==3){
+      std::cout<<std::endl;
+    }
+  }
+  std::cout<<std::endl;
+}
+
+void listPadKeys(){
+  for (int i=0;i<PADBUTTONS;i++){
+    std::cout<<padKeys[i]<<std::endl;
+  }
+}
+
+void listExtraKeys(){
+  for (int i=0;i<EXTRABUTTONS;i++){    
+    std::cout<<extraKeys[i]<<std::endl;
+  }
+}
+
+
