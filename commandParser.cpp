@@ -189,7 +189,7 @@ RawCommand SetCfgAutofireCommand::parse(int argc,char** argv){
         autofire.firemask[off/8]&=~(1<<(off%8));
       }catch(...){
         throw std::invalid_argument("expected a sequence with the following keywords:\n"
-                                  "io io<n> pad1 pad2 up down left right a b c start x y z mode"
+                                  "io io<n> pad1 pad2 up down left right a b c start x y z mode "
                                    "period <value> pushtime <value> \n"
                                     "Rapid fire unit: period 837 pushtime 251 \n"
                                     "Japanese sms: period 260 pushtime 130 \n"
