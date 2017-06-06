@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "commandParser.h"
 #include "keyMapping.h"
-
+#include "config.h"
 
 
 enum LocalCmd{
@@ -15,6 +15,7 @@ enum LocalCmd{
 
 void usbSend(const RawCommand& cmd){  
   helium::UsbMessage<helium::array::RESIZABLE> msg(cmd.packet.size());
+  msg.resize(sizeof(Config)+2);
   for (size_t i=0;i<cmd.packet.size();i++){
     msg[i]=cmd.packet[i];
   }
@@ -94,6 +95,8 @@ int main(int argc,char** argv){
       usbSend(rcmd);
     }
   }catch(std::invalid_argument& e){
+    std::cout<<e.what()<<std::endl;
+  }catch(helium::exc::Exception& e){
     std::cout<<e.what()<<std::endl;
   }
   
