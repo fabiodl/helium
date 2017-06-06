@@ -1689,7 +1689,9 @@ UsbHid::UsbHid(int vendorId,int productId,const char *manufacturer,const char* p
                         
         printf("Device path:  %s\n", lpDevicePath);
 	*/
-	
+
+        std::cout<<"path "<<ini.pInterfaceDetailData->DevicePath<<std::endl;
+        
 	hid=CreateFileA(ini.pInterfaceDetailData->DevicePath,
 			   GENERIC_READ | GENERIC_WRITE,
 			   FILE_SHARE_READ | FILE_SHARE_WRITE,
@@ -1699,10 +1701,12 @@ UsbHid::UsbHid(int vendorId,int productId,const char *manufacturer,const char* p
 			   NULL);
 	if (hid==INVALID_HANDLE_VALUE) continue;
 
+        std::cout<<"valid handle"<<std::endl;
+        
 	HIDD_ATTRIBUTES attributes;
 	bResult = HidD_GetAttributes(hid, &attributes);
 
-	//std::cout<<"**+**"<<std::hex<<attributes.VendorID<<" "<<attributes.ProductID<<" "<<std::dec<<std::endl;
+	std::cout<<"**+**"<<std::hex<<attributes.VendorID<<" "<<attributes.ProductID<<" "<<std::dec<<std::endl;
 
 	
 	
