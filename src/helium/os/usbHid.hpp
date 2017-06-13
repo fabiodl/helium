@@ -70,6 +70,20 @@ namespace helium{
   }
 
 
+template<int N,bool padRead,bool padWrite>
+void UsbMessage<N,padRead,padWrite>::setReportId(uint8_t id){
+  if (!padWrite){
+    throw exc::InvalidOperation("Setting report id not allowed");
+  }
+  this->data[0]=id;
+}
+
+template<int N,bool padRead,bool padWrite>
+uint8_t UsbMessage<N,padRead,padWrite>::getReportId(uint8_t id){
+  return this->data[0];
+}
+  
+  
   template<int N,bool padRead,bool padWrite>
   UsbMessage<N,padRead,padWrite>& UsbMessage<N,padRead,padWrite>::operator=(const unsigned char* d){
     memcpy(this->data+1,d,payloadSize());
@@ -78,7 +92,9 @@ namespace helium{
 
   template<int N,bool padRead,bool padWrite>
   std::ostream& operator<<(std::ostream& o,const  UsbMessage<N,padRead,padWrite>& m){
-    o<<(padWrite?"(with report id) ":"");
+    if (padWrite){
+      o<<"(with report id "<<(int)m.data[0]<<") ";
+    }
     printHex(m.data+(padWrite?0:1),padWrite?m.completeSize():m.payloadSize(),o); 
     return o;
   }

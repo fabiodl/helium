@@ -12,7 +12,7 @@
 
 #include <helium/core/exception.h>
 #include <helium/util/ioUtil.h>
-
+#include <stdint.h>
 //#ifndef _WIN32
 //#include <helium/os/timeout.h>
 //#endif
@@ -138,7 +138,8 @@ public:
   void resize(size_t n);
 
   UsbMessage(int size=0);
-
+  void setReportId(uint8_t id);
+  uint8_t getReportId(uint8_t id);
  
 
   };

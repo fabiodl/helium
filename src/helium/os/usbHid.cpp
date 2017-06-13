@@ -1691,12 +1691,13 @@ UsbHid::UsbHid(int vendorId,int productId,const char *manufacturer,const char* p
 	*/
 	
 	hid=CreateFileA(ini.pInterfaceDetailData->DevicePath,
-			   GENERIC_READ | GENERIC_WRITE,
-			   FILE_SHARE_READ | FILE_SHARE_WRITE,
-			   NULL,
-			   OPEN_EXISTING,
-			   0*FILE_FLAG_OVERLAPPED,
-			   NULL);
+                        GENERIC_READ | GENERIC_WRITE,
+                        //ACCESS_TYPE_NONE,
+                        FILE_SHARE_READ | FILE_SHARE_WRITE,
+                        NULL,
+                        OPEN_EXISTING,
+                        0*FILE_FLAG_OVERLAPPED,
+                        NULL);
 	if (hid==INVALID_HANDLE_VALUE) continue;
 
 	HIDD_ATTRIBUTES attributes;
