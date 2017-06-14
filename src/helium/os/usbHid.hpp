@@ -95,7 +95,7 @@ uint8_t UsbMessage<N,padRead,padWrite>::getReportId(){
     if (padWrite){
       o<<"(with report id "<<(int)m.data[0]<<") ";
     }
-    printHex(m.data+(padWrite?0:1),padWrite?m.completeSize():m.payloadSize(),o); 
+    printHex(m.data+(padWrite?1:0),m.payloadSize(),o); 
     return o;
   }
 
