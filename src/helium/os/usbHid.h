@@ -139,7 +139,7 @@ public:
 
   UsbMessage(int size=0);
   void setReportId(uint8_t id);
-  uint8_t getReportId(uint8_t id);
+  uint8_t getReportId();
  
 
   };

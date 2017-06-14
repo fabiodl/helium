@@ -79,7 +79,7 @@ void UsbMessage<N,padRead,padWrite>::setReportId(uint8_t id){
 }
 
 template<int N,bool padRead,bool padWrite>
-uint8_t UsbMessage<N,padRead,padWrite>::getReportId(uint8_t id){
+uint8_t UsbMessage<N,padRead,padWrite>::getReportId(){
   return this->data[0];
 }
   
