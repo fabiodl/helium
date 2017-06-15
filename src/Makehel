@@ -283,7 +283,7 @@ NOCCACHE = 1
 endif
 
 ifndef CROSSCOMPILE_WIN32
-  ifndef NOCCACHE
+  ifdef NOCCACHE
     CC = g++
   else
     CC = ccache g++
