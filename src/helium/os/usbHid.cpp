@@ -1758,9 +1758,6 @@ UsbHid::UsbHid(int vendorId,int productId,const char *manufacturer,const char* p
     if (!WriteFile(hid, buff, size, &bWritten, 0)){
       throw exc::UsbWriteException(size,toString(bWritten)+" written :"+getLastErrorMsg(),GetLastError());
     }
-#warning hack here
-    return size;
-    
     return bWritten;
   }
 

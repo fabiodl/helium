@@ -106,7 +106,8 @@ uint8_t UsbMessage<N,padRead,padWrite>::getReportId(){
       void UsbHid::sendAll(const UsbMessage<N,padRead,padWrite>& m){
       //start at 1 if there's no id to read
      int toSend=padWrite?m.completeSize():m.payloadSize();     
-      if (send(m.data+(padWrite?0:1),toSend)!=toSend){
+     //windows may "send" more bytes than actually requested
+     if (send(m.data+(padWrite?0:1),toSend)<toSend){
 	throw exc::UsbWriteException(toSend);
       }
     }
