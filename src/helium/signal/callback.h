@@ -294,11 +294,11 @@ template <typename C> class ClassCallback<void,C>:public Callback<void>{
      };
 
 
-    template <typename P,void (*f)(P)> class FunctionParamCallback<void,P,f>:public Callback<void>{
+    template <typename P,void (*f)(P)> class VoidFunctionParamCallback:public Callback<void>{
       P p;
       
       
-      FunctionParamCallback(const P& pp):p(pp){
+      VoidFunctionParamCallback(const P& pp):p(pp){
       }
       void operator()(){
 	(*f)(p);
@@ -383,7 +383,7 @@ template <typename C> class ClassCallback<void,C>:public Callback<void>{
 
 
 //no parameter passed to () 
-    template <typename C,void (C::*m)()> class ClassCallback<void,C,m>:public Callback<void>{
+    template <typename C,void (C::*m)()> class VoidClassCallback:public Callback<void>{
     protected:
       C* c;
       
@@ -392,9 +392,9 @@ template <typename C> class ClassCallback<void,C>:public Callback<void>{
 	(c->*m)();
       }
       Callback<void>* clone() const{
-	return new ClassCallback(c);    
+	return new VoidClassCallback(c);    
       }
-      ClassCallback(C* pc):c(pc){
+      VoidClassCallback(C* pc):c(pc){
       }
 };
 
